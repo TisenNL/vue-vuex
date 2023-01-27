@@ -10,7 +10,14 @@
 
     <div class="container">
 
-      <AppContador />
+      <div class="row">
+        <div class="col-sm-9 border-right">
+          <TarefasLista />
+        </div>
+        <div class="col-sm-3">
+          <AppContador />
+        </div>
+      </div>
 
     </div>
 
@@ -20,11 +27,12 @@
 <script>
 
 import AppContador from '@/components/AppContador.vue'
+import TarefasLista from '@/components/TarefasLista.vue'
 
 export default {
   components: {
-    AppContador
+    AppContador,
+    TarefasLista
   }
-    
 }
 </script>
