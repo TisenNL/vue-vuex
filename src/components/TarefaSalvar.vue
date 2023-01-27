@@ -55,7 +55,7 @@ export default {
     },
     created() {
         if (this.tarefa) {
-            console.log('Tarefa por id: ', this.$store.getters.buscarTarefasPorId(this.tarefa.id))
+            console.log('Tarefa por id: ', this.$store.getters['tarefas/buscarTarefasPorId'](this.tarefa.id))
         }
     },
     methods: {
