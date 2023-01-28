@@ -26,8 +26,8 @@
 
 <script>
 
-import AppContador from '@/components/AppContador.vue'
-import TarefasLista from '@/components/TarefasLista.vue'
+import AppContador from '@/resources/contador/_components/AppContador.vue'
+import TarefasLista from '@/resources/tarefas/_components/TarefasLista.vue'
 
 export default {
   components: {
