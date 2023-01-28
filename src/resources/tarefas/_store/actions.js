@@ -1,20 +1,39 @@
 /* eslint-disable no-unused-vars */
+import TarefasService from './../_services/TarefasService'
+
+import * as types from './mutation-types'
 
 export default {
-    buscarTarefas: () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve([
-                    { id: 1, titulo: 'Aprender Vue', concluido: true },
-                    { id: 2, titulo: 'Aprender Vue Router', concluido: true },
-                    { id: 3, titulo: 'Aprender Vuex', concluido: false }
-                ])
-            }, 2000)
-        })
+    concluirTarefa: async ({ dispatch }, payload) => {
+        const tarefa = Object.assign({}, payload.tarefa)
+        tarefa.concluido = !tarefa.concluido
+        dispatch('editarTarefa', { tarefa })
+    }, 
+    criarTarefa: ({ commit }, { tarefa }) => {
+        return TarefasService.postTarefa(tarefa)
+            .then(response => commit(types.CRIAR_TAREFA, { tarefa: response.data }))
+            .catch(erro => commit(types.SETAR_ERRO, { erro }))
     },
-    listarTarefas: async ({ commit, dispatch, state, rootState }) => {
-        const tarefas = await dispatch('buscarTarefas')
-        commit('listarTarefas', { tarefas })
-        dispatch('logar', 'Tiago Neves', { root: true })
+    editarTarefa: async ({ commit }, { tarefa }) => {
+        const response = await TarefasService.putTarefa(tarefa)
+        commit(types.EDITAR_TAREFA, { tarefa: response.data })
+    },
+    deletarTarefa: async ({ commit }, { tarefa }) => {
+        const response = await TarefasService.deleteTarefa(tarefa.id)
+        commit(types.DELETAR_TAREFA, { tarefa })
+    },
+    listarTarefas: async ({ commit }) => {
+        try {
+            const response = await TarefasService.getTarefas()
+            commit(types.LISTAR_TAREFAS, { tarefas: response.data })
+        } catch(erro) {
+            commit(types.SETAR_ERRO, { erro })
+        }
+    },
+    selecionarTarefa: ({ commit }, payload) => {
+        commit(types.SELECIONAR_TAREFA, payload)
+    },
+    resetarTarefaSelecionada: ({ commit }) => {
+        commit(types.SELECIONAR_TAREFA, { tarefa: undefined })
     }
 }

@@ -4,7 +4,9 @@ import getters from "./getters"
 import mutations from "./mutations"
 
 const state = {
-    tarefas: []
+    erro: undefined,
+    tarefas: [],
+    tarefaSelecionada: undefined
 }
 
 export default {
